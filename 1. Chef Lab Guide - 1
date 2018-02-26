@@ -1,0 +1,88 @@
+Setting up standalone version:
+------------------------------
+ssh to the chef server
+
+Download chef development and install
+# wget https://packages.chef.io/files/stable/chefdk/2.4.17/el/7/chefdk-2.4.17-1.el7.x86_64.rpm
+
+Install chef
+# sudo rpm -ivh chefdk-2.4.17-1.el7.x86_64.rpm
+
+Run chef client in local mode
+# sudo chef-client --local-mode
+
+1. Create a file learn.rb
+-------------------------
+
+package 'httpd' do
+  action :install
+end
+
+:install - install a package(the default if no action is defined)
+:nothing - This action does nothing UNTIL it is notified by another resource to perform an action
+:purge - Removes the configuration files as well as teh package(Only for Debian)
+:reconfig - Reconfigure a package
+:remove - Removes a package(also removes configuration files)
+:upgrade - Install a package, if it is already installed, ensure it is latest version.
+
+#checking the chef syntax
+foodcritic learn.rb
+
+#run chef locally
+chef-client --local-mode learn.rb
+
+2. Update Service on the same program
+----------------------------------
+vim learn.rb
+  package 'httpd' do
+  end
+  
+  service 'httpd' do 
+    action [:enable, :start]
+  end 
+:wq
+
+:disable - Disable a service so it does not start at startup
+:enable - Enable a service to start at boot time
+:nothing - Does nothing to the service
+:reload - Reloads the service configuration
+:start - Starts the service and keeps it running until stopped or disabled.
+:restart - Restart a service
+:stop - Stop a service
+
+#checking the chef syntax
+foodcritic learn.rb
+
+#run chef locally
+chef-client --local-mode learn.rb
+
+3. Update file resource on the same program
+-------------------------------------------
+vim learn.rb
+
+package 'httpd' do
+end
+
+service 'httpd' do
+  action [:enable,:start]
+end
+
+file '/var/www/index.html' do
+  action :remove
+end
+
+file 'var/www/html/index.html' do
+  content 'Hello World! Pavan has written'
+  mode '0755'
+  owner 'root'
+  group 'apache'
+end
+
+  
+:wq!
+
+#checking the chef syntax
+foodcritic learn.rb
+
+#run chef locally
+chef-client --local-mode learn.rb

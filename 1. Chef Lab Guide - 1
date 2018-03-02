@@ -86,3 +86,34 @@ foodcritic learn.rb
 
 #run chef locally
 chef-client --local-mode learn.rb
+
+Chef Server Installation:
+-------------------------
+The Chef Server is the central location which acts as an artifact repository or "hub" that stores cookbooks, cookbook versions, facts about the node, data bags and metadata information about nodes.
+All metadata of a node, when it is registered with Chef server, is stored on the Chef server.
+The metadata is populated and sent to the server with chef-client, which is an application that runs on the node.
+Configuration enforcement is not handled by Chef Server, instead the desired state configuration is enforced when chef-client runs and a "convergence" happens, allowing for easy scalability.
+
+Demo:
+build centos 7 VM through vagrant file
+
+wget https://packages.chef.io/files/current/chef-server/12.17.33/el/7/chef-server-core-12.17.33-1.el7.x86_64.rpm
+
+rpm -Uvh chef-server-12.17.33.-1.e17.x86_64.rpm
+
+chef-server-ctl reconfigure
+
+#Create administrator user to manage chef infrastructure.
+chef-server-ctl user-create kumar pavan kumar savipavan@gmail.com 'Password' --filename kumar-rsa
+
+#create organization:
+chef-server-ctl org-create pavanaccademy 'Pavan Accademy. Inc' --association_user pavan --filename pavan-validator.pem
+
+#Install chef GUI
+chef-server-ctl install chef-manage
+
+reconfigure and accept license agreement
+chef-server-ctl reconfigure
+
+GUI login:
+https://ipaddress/login

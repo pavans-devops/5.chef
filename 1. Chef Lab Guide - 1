@@ -117,3 +117,70 @@ chef-server-ctl reconfigure
 
 GUI login:
 https://ipaddress/login 
+
+
+Setting up the Work Station
+---------------------------
+Login to the Chef Console --> Click on Administration --> Click on Organization --> Click on Starter Kit --> Proceed --> 
+
+Start new server and connect the work station --> 
+copy the starter kit -->  into workstation
+scp chef-starter.zip vagrant@192.168.1.16:~/
+
+yum install unzip
+
+unzip chef-starter.zip
+rm -rf chef-starter.zip
+cd chef-repo
+ls -la
+cd .chef
+cat knife.rb
+
+knife ssl fetch
+
+on agent 
+---------
+login ssh
+
+Boot strap ( run below command inside chef-repo)
+#knife bootstrap 192.168.16.3 -N <hostname of the node> --sh-user user --sudo 
+
+on console: we can see the node
+
+Node Object: The node object is made up of groups of attributes and the node run-lists
+An attribute is a specific piece of data about the node.
+- CPU information
+- IP Address
+- Hostname
+
+Attributes are collected by a tool called ohai, 
+- Chef-client automatically executes ohai and stores the data about a node in an object.
+- This node object information can be used within the recipes named node.
+- This information combined with the nodes run-lists is called the node object
+- The node object is stored in a JSON file on the server.
+
+Working with Ohai and Node Attributes:
+
+#ohai
+#ohai ipaddress
+#ohai hostname
+#ohai | grep ipaddress
+#ohai cpu
+#ohai | grep swap
+#ohai platform
+
+#ohai platform_family
+
+On workstation:
+cd chef-repo
+cd cookbooks
+#create chef recipes
+
+#upload recipe in to server
+knife recipe upload learn.rb
+
+#add recipe in to node runlist
+knife node run_list add <node ip or dns> 'recipe[learn.rb]'
+
+on a client :
+chef-client

@@ -99,7 +99,7 @@ build centos 7 VM through vagrant file
 
 wget https://packages.chef.io/files/current/chef-server/12.17.33/el/7/chef-server-core-12.17.33-1.el7.x86_64.rpm
 
-rpm -Uvh chef-server-12.17.33.-1.e17.x86_64.rpm
+rpm -Uvh chef-server-core-12.17.33-1.el7.x86_64.rpm
 
 chef-server-ctl reconfigure
 

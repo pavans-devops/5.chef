@@ -107,7 +107,7 @@ chef-server-ctl reconfigure
 chef-server-ctl user-create kumar pavan kumar savipavan@gmail.com 'Password' --filename kumar-rsa
 
 #create organization:
-chef-server-ctl org-create pavanaccademy 'Pavan Accademy. Inc' --association_user pavan --filename pavan-validator.pem
+chef-server-ctl org-create pavanorg 'Pavan Org. Inc' --association_user pavan --filename pavan-validator.pem
 
 #Install chef GUI
 chef-server-ctl install chef-manage
@@ -116,4 +116,4 @@ reconfigure and accept license agreement
 chef-server-ctl reconfigure
 
 GUI login:
-https://ipaddress/login
+https://ipaddress/login 
